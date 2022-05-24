@@ -190,7 +190,7 @@ main {
 
 label {
   font-family: var(--font-default);
-  font-size: 17px;
+  font-size: 14px;
   font-weight: normal;
   display: inline-block;
   margin-bottom: 11px;
@@ -402,7 +402,7 @@ input[data-error]::after {
 /* custom select end */
 .text-label {
   font-weight: normal;
-  font-size: 16px;
+  font-size: 14px;
 }
 .hero-section {
   min-height: 93vh;
@@ -516,6 +516,19 @@ footer {
     text-align: center;
   }
 }
+ 
+/* Input error messages */
+.form-input-error {
+  display: none;
+  margin-top: 5px;
+  font-size: 0.6em;
+  font-style: italic;
+  font-weight: 200;
+}
+
+/* .first-name-error {
+ 
+} */
 
 @keyframes modalopen {
   from {
