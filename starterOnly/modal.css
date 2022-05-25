@@ -169,6 +169,10 @@ main {
   background-color: rgba(26, 39, 156, 0.4);
 }
 
+.bground-confirm {
+  display: none;
+}
+
 .content {
   margin: 5% auto;
   width: 100%;
@@ -186,6 +190,21 @@ main {
 .modal-body {
   padding: 15px 8%;
   margin: 15px auto;
+}
+
+.confirm-modal-body {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.confirm-text {
+  font-size: 1.4em;
+  font-weight: 200;
+  text-align: center;
+  margin: auto;
 }
 
 label {
