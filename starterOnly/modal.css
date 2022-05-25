@@ -157,7 +157,7 @@ main {
   font-size: 16px;
 }
 
-.bground {
+.bground, .bground-confirm  {
   display: none;
   position: fixed;
   z-index: 1;
@@ -167,10 +167,6 @@ main {
   width: 100%;
   overflow: auto;
   background-color: rgba(26, 39, 156, 0.4);
-}
-
-.bground-confirm {
-  display: none;
 }
 
 .content {
@@ -193,6 +189,8 @@ main {
 }
 
 .confirm-modal-body {
+  padding: 15px 8%;
+  margin: 15px auto;
   height: 80vh;
   display: flex;
   flex-direction: column;
@@ -315,7 +313,8 @@ input[data-error]::after {
   left: 21%;
   top: 19%;
 }
-.close {
+.close,
+.close-confirm {
   position: absolute;
   right: 15px;
   top: 15px;
@@ -326,7 +325,9 @@ input[data-error]::after {
   transform: scale(0.7);
 }
 .close:before,
-.close:after {
+.close:after,
+.close-confirm::before,
+.close-confirm:after {
   position: absolute;
   left: 15px;
   content: " ";
@@ -334,14 +335,17 @@ input[data-error]::after {
   width: 3px;
   background-color: #fff;
 }
-.close:before {
+.close:before,
+.close-confirm::before {
   transform: rotate(45deg);
 }
-.close:after {
+.close:after,
+.close-confirm:after {
   transform: rotate(-45deg);
 }
 .btn-submit,
-.btn-signup {
+.btn-signup,
+.close-confirm-button {
   background: #fe142f;
   display: block;
   margin: 0 auto;

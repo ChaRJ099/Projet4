@@ -14,14 +14,19 @@ window.addEventListener("load", function () {
   const modalBtn = document.querySelectorAll(".modal-btn");
   const modalCloseBtn = document.querySelector(".close");
   const modalConfirm = document.querySelector(".bground-confirm");
-  const modalCloseConfirmBtn = document.querySelector(".close-confirm-button");
+  const closeConfirm = document.querySelector(".close-confirm");
+  const closeConfirmButton = document.querySelector(".close-confirm-button");
 
   // launch modal event
   modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
   // Close modal event
   modalCloseBtn.addEventListener("click", closeModal);
-  modalCloseConfirmBtn.addEventListener("click", closeModalConfirm);
+
+
+  // Close Confirm event
+  closeConfirm.addEventListener("click", closeModalConfirm);
+  closeConfirmButton.addEventListener("click", closeModalConfirm);
 
   // launch modal form
   function launchModal() {
@@ -58,37 +63,15 @@ window.addEventListener("load", function () {
   let radioButtons = document.querySelectorAll(".radio-input");
   let submit = document.querySelector(".btn-submit");
 
-  let formData = [
-    {
-      name: 'firstName',
-      valid: false
-    },
-    {
-      name: 'lastName',
-      valid: false
-    },
-    {
-      name: 'email',
-      valid: false
-    },
-    {
-      name: 'birthdate',
-      valid: false
-    },
-    {
-      name: 'quantity',
-      valid: false
-    },
-    {
-      name: 'radioButtons',
-      valid: false
-    },
-    {
-      name: 'usingConditions',
-      valid: false
-    }
-  ];
-
+  let formData = {
+    "firstName": false,
+    "lastName": false,
+    "email": false,
+    "birthdate": false,
+    "quantity": false,
+    "radioButtons": false,
+    "usingConditions": false
+  }
 
   // Error messages
   let firstNameError = this.document.querySelector(".first-name-error");
@@ -104,11 +87,13 @@ window.addEventListener("load", function () {
   let emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
   // Fonction qui vérifie la longueur de la valeur de input
-  function minLengthValidator(errorElement, minLengthNumber, inputValue) {
+  function minLengthValidator(errorElement, minLengthNumber, inputValue, name) {
     if (inputValue && inputValue.length >= minLengthNumber) {
       errorElement.style.display = "none";
+      formData[name] = true;
     } else {
       errorElement.style.display = "block";
+      formData[name] = false;
     }
   }
   
@@ -116,8 +101,10 @@ window.addEventListener("load", function () {
   function emailValidator(input, errorElement) {
     if (input.match(emailPattern)) {
       errorElement.style.display = "none";
+      formData.email = true;
     } else {
       errorElement.style.display = "block";
+      formData.email = false;
     }
   }
 
@@ -125,8 +112,10 @@ window.addEventListener("load", function () {
   function dateValidator(input, errorElement) {
     if (input.match(datePattern)) {
       errorElement.style.display = "none";
+      formData.birthdate = true;
     } else {
       errorElement.style.display = "block";
+      formData.birthdate = false;
     }
   }
 
@@ -136,9 +125,11 @@ window.addEventListener("load", function () {
     for (let radio of input){
       if (radio.checked){
         errorElement.style.display = "none";
+        formData.radioButtons = true;
         return count = true;
       }
       errorElement.style.display = "block";
+      formData.radioButtons = false;
     }
   }
 
@@ -146,8 +137,10 @@ window.addEventListener("load", function () {
   function checkedValidator(input, errorElement) {
     if (input.checked == true) {
       errorElement.style.display = "none";
+      formData.usingConditions = true;
     } else {
       errorElement.style.display = "block";
+      formData.usingConditions = false;
     }
   }
 
@@ -158,12 +151,12 @@ window.addEventListener("load", function () {
 
   //On appelle la fonction de validation à l'interaction avec input firstname
   firstName.addEventListener("input", function () {
-    minLengthValidator(firstNameError, 2, this.value);
+    minLengthValidator(firstNameError, 2, this.value, "firstName");
   });
 
   //On appelle la fonction de validation à l'interaction avec input lastname
   lastName.addEventListener("input", function () {
-    minLengthValidator(lastNameError, 2, this.value);
+    minLengthValidator(lastNameError, 2, this.value, "lastName");
   });
 
   //On appelle la fonction de validation à l'interaction avec input email
@@ -178,7 +171,7 @@ window.addEventListener("load", function () {
 
   //On appelle la fonction de validation à l'interaction avec input quantity
   quantity.addEventListener("input", function () {
-    minLengthValidator(quantityError, 1, this.value);
+    minLengthValidator(quantityError, 1, this.value, "quantity");
   });
 
   //On appelle la fonction de validation à l'interaction avec click input radio
@@ -203,9 +196,24 @@ window.addEventListener("load", function () {
     minLengthValidator(quantityError, 1, quantity.value);
     radioValidator(radioButtons, locationError);
     checkedValidator(usingConditions, usingConditionsError);
+
+    let isFormValid = true;
+    for (const property in formData) {
+      if (formData[property] === false) {
+        isFormValid = false;
+      }
+    }
+
+    if (isFormValid) {
+      launchModalConfirm();
+      closeModal();
+    }
+
   });
 
   form.addEventListener("submit", function (e) {
     e.preventDefault(); //stop form from submitting
   });
+
+
 });
