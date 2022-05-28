@@ -1,13 +1,19 @@
-// DOM loading
-window.addEventListener("load", function () {
-  function editNav() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-      x.className += "responsive";
-    } else {
-      x.className = "topnav";
-    }
+function editNav() {
+  let myTopNav = document.querySelector("#myTopnav");
+  if (myTopNav.className === "topnav") {
+    // myTopNav.className += " responsive";
+    myTopNav.classList.add('responsive');
+    // myTopNav.setAttribute("class", "topnav responsive");
+  } else {
+    // myTopNav.className = "topnav";
+    myTopNav.classList.remove('responsive');
+    // myTopNav.setAttribute("class", "topnav");
+
   }
+}
+
+// DOM loading
+// window.addEventListener("load", function () {
 
   // DOM Elements
   const modalbg = document.querySelector(".bground");
@@ -63,7 +69,16 @@ window.addEventListener("load", function () {
   let radioButtons = document.querySelectorAll(".radio-input");
   let submit = document.querySelector(".btn-submit");
 
-  let formData = {
+  //DOM invalid inputs
+  let firstNameData = document.querySelector(".firstname");
+  let lastNameData = document.querySelector(".lastname");
+  let emailData = document.querySelector(".email");
+  let birthdateData = document.querySelector(".birthdate");
+  let quantityData = document.querySelector(".quantity");
+  let locationsData = document.querySelector(".radio-buttons");
+  let conditionsData = document.querySelector(".checkboxes");
+
+  let formInputs = {
     "firstName": false,
     "lastName": false,
     "email": false,
@@ -82,7 +97,7 @@ window.addEventListener("load", function () {
   let locationError = this.document.querySelector(".location-error");
   let usingConditionsError = this.document.querySelector(".using-conditions-error");
 
-  // Regex
+  // Regexp
   let datePattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
   let emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -90,32 +105,33 @@ window.addEventListener("load", function () {
   function minLengthValidator(errorElement, minLengthNumber, inputValue, name) {
     if (inputValue && inputValue.length >= minLengthNumber) {
       errorElement.style.display = "none";
-      formData[name] = true;
+
+      formInputs[name] = true;
     } else {
       errorElement.style.display = "block";
-      formData[name] = false;
+      formInputs[name] = false;
     }
   }
   
   // Fonction qui vérifie la conformité de l'adresse email
   function emailValidator(input, errorElement) {
     if (input.match(emailPattern)) {
-      errorElement.style.display = "none";
-      formData.email = true;
+      formInputs.email = true;
+      emailData.setAttribute("data-error-visible", false);
     } else {
-      errorElement.style.display = "block";
-      formData.email = false;
+      emailData.setAttribute("data-error-visible", true);
+      formInputs.email = false;
     }
   }
 
   // Fonction qui vérifie la conformité de la date de naissance
   function dateValidator(input, errorElement) {
     if (input.match(datePattern)) {
-      errorElement.style.display = "none";
-      formData.birthdate = true;
+      formInputs.birthdate = true;
+      birthdateData.setAttribute("data-error-visible", false);
     } else {
-      errorElement.style.display = "block";
-      formData.birthdate = false;
+      birthdateData.setAttribute("data-error-visible", true);
+      formInputs.birthdate = false;
     }
   }
 
@@ -124,23 +140,23 @@ window.addEventListener("load", function () {
     let count = false;
     for (let radio of input){
       if (radio.checked){
-        errorElement.style.display = "none";
-        formData.radioButtons = true;
+        locationsData.setAttribute("data-error-visible", false);
+        formInputs.radioButtons = true;
         return count = true;
       }
-      errorElement.style.display = "block";
-      formData.radioButtons = false;
+      locationsData.setAttribute("data-error-visible", true);
+      formInputs.radioButtons = false;
     }
   }
 
   // Fonction qui vérifie si un checkbox est checked
   function checkedValidator(input, errorElement) {
     if (input.checked == true) {
-      errorElement.style.display = "none";
-      formData.usingConditions = true;
-    } else {
-      errorElement.style.display = "block";
-      formData.usingConditions = false;
+      conditionsData.setAttribute("data-error-visible", false);
+      formInputs.usingConditions = true;
+    } else { 
+      conditionsData.setAttribute("data-error-visible", true);
+      formInputs.usingConditions = false;
     }
   }
 
@@ -198,14 +214,15 @@ window.addEventListener("load", function () {
     checkedValidator(usingConditions, usingConditionsError);
 
     let isFormValid = true;
-    for (const property in formData) {
-      if (formData[property] === false) {
+    for (const property in formInputs) {
+      if (formInputs[property] === false) {
         isFormValid = false;
       }
     }
 
     if (isFormValid) {
       launchModalConfirm();
+      form.reset();
       closeModal();
     }
 
@@ -216,4 +233,4 @@ window.addEventListener("load", function () {
   });
 
 
-});
+// });

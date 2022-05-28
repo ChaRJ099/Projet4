@@ -90,8 +90,6 @@ img {
   }
 }
 
-
-
  @media screen and (max-width: 540px) {
   .topnav a {display: none;}
   .topnav a.icon {
@@ -243,12 +241,19 @@ input {
 .formData[data-error-visible="true"] .text-control {
   border: 2px solid #e54858;
 }
-/* 
-input[data-error]::after {
-    content: attr(data-error);
-    font-size: 0.4em;
-    color: red;
-} */
+.formData[data-error-visible="true"] .form-input-error {
+  display: block;
+}
+
+/* Input error messages */
+.form-input-error {
+  display: none;
+  color: #e54858;
+  margin-top: 5px;
+  font-size: 0.5em;
+  font-weight: 200;
+}
+
 .checkbox-label,
 .checkbox2-label {
   position: relative;
@@ -539,19 +544,6 @@ footer {
     text-align: center;
   }
 }
- 
-/* Input error messages */
-.form-input-error {
-  display: none;
-  margin-top: 5px;
-  font-size: 0.6em;
-  font-style: italic;
-  font-weight: 200;
-}
-
-/* .first-name-error {
- 
-} */
 
 @keyframes modalopen {
   from {
@@ -562,4 +554,3 @@ footer {
     opacity: 1;
   }
 }
-

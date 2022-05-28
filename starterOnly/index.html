@@ -30,7 +30,7 @@
         <a href="#">
           <span>Évènements passés</span>
         </a>
-        <a href="javascript:void(0);" class="icon" onclick="editNav()">
+        <a class="icon" onclick="editNav()">
           <i class="fa fa-bars"></i>
         </a>
       </div>
@@ -60,33 +60,33 @@
           <span class="close"></span>
           <div class="modal-body">
             <form id="reserve-form" action="index.html" method="get" novalidate>
-              <div class="formData">
+              <div class="formData firstname">
                 <label for="first">Prénom *</label><br>
                 <input class="text-control" type="text" id="first" name="first" required /><br>
                 <span class="form-input-error first-name-error">Veuillez entrer 2 caractères ou plus pour le champ du nom.</span>
               </div>
-              <div class="formData">
+              <div class="formData lastname">
                 <label for="last">Nom *</label><br>
                 <input class="text-control" type="text" id="last" name="last" required /><br>
                 <span class="form-input-error last-name-error">Veuillez entrer 2 caractères ou plus pour le champ du nom.</span>
               </div>
-              <div class="formData">
+              <div class="formData email">
                 <label for="email">E-mail *</label><br>
                 <input class="text-control" type="email" id="email" name="email"/><br>
                 <span class="form-input-error email-error">Veuillez entrer une adresse email valide.</span>
               </div>
-              <div class="formData">
+              <div class="formData birthdate">
                 <label for="birthdate">Date de naissance *</label><br>
                 <input required class="text-control" type="date" id="birthdate" name="birthdate"/><br>
                 <span class="form-input-error birthdate-error">Vous devez entrer votre date de naissance.</span>
               </div>
-              <div class="formData">
+              <div class="formData quantity">
                 <label for="quantity">À combien de tournois GameOn avez-vous déjà participé ? *</label><br>
                 <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99" />
                 <span class="form-input-error quantity-error">Veuillez renseigner un nombre.</span>
               </div>
               <p class="text-label">A quel tournoi souhaitez-vous participer cette année ? *</p>
-              <div class="formData form-radio">
+              <div class="formData radio-buttons">
                 <input class="checkbox-input radio-input" type="radio" id="location1" name="location" value="New York" />
                 <label class="checkbox-label" for="location1">
                   <span class="checkbox-icon"></span>
@@ -120,7 +120,7 @@
                 <span class="form-input-error location-error">Vous devez choisir une option.</span>
               </div>
 
-              <div class="formData">
+              <div class="formData checkboxes">
                 <input  class="checkbox-input" type="checkbox" id="checkbox1" />
                 <label class="checkbox2-label" for="checkbox1">
                   <span class="checkbox-icon"></span>
