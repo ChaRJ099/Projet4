@@ -8,13 +8,11 @@ function editNav() {
     // myTopNav.className = "topnav";
     myTopNav.classList.remove('responsive');
     // myTopNav.setAttribute("class", "topnav");
-
   }
 }
 
 // DOM loading
-// window.addEventListener("load", function () {
-
+window.addEventListener("load", function () {
   // DOM Elements
   const modalbg = document.querySelector(".bground");
   const modalBtn = document.querySelectorAll(".modal-btn");
@@ -59,163 +57,224 @@ function editNav() {
   //**************************//
 
   //DOM elements
-  let form = document.querySelector("#reserve-form");
-  let firstName = document.querySelector("#first");
-  let lastName = document.querySelector("#last");
-  let email = document.querySelector("#email");
-  let birthdate = document.querySelector("#birthdate");
-  let quantity = document.querySelector("#quantity");
-  let usingConditions = document.querySelector("#checkbox1");
-  let radioButtons = document.querySelectorAll(".radio-input");
-  let submit = document.querySelector(".btn-submit");
+  const form = document.querySelector("#reserve-form");
+  const firstName = document.querySelector("#first");
+  const lastName = document.querySelector("#last");
+  const email = document.querySelector("#email");
+  const birthdate = document.querySelector("#birthdate");
+  const quantity = document.querySelector("#quantity");
+  const usingConditions = document.querySelector("#checkbox1");
+  const radioButtons = document.querySelectorAll(".radio-input");
+  const submit = document.querySelector(".btn-submit");
 
-  //DOM invalid inputs
-  let firstNameData = document.querySelector(".firstname");
-  let lastNameData = document.querySelector(".lastname");
-  let emailData = document.querySelector(".email");
-  let birthdateData = document.querySelector(".birthdate");
-  let quantityData = document.querySelector(".quantity");
-  let locationsData = document.querySelector(".radio-buttons");
-  let conditionsData = document.querySelector(".checkboxes");
-
-  let formInputs = {
-    "firstName": false,
-    "lastName": false,
-    "email": false,
-    "birthdate": false,
-    "quantity": false,
-    "radioButtons": false,
-    "usingConditions": false
-  }
-
-  // Error messages
-  let firstNameError = this.document.querySelector(".first-name-error");
-  let lastNameError = this.document.querySelector(".last-name-error");
-  let emailError = this.document.querySelector(".email-error");
-  let birthdateError = this.document.querySelector(".birthdate-error");
-  let quantityError = this.document.querySelector(".quantity-error");
-  let locationError = this.document.querySelector(".location-error");
-  let usingConditionsError = this.document.querySelector(".using-conditions-error");
+  let formData = {
+    firstName: {
+      isValid: false,
+      inputName: document.querySelector('#first'),
+      errorMessage: 'Veuillez entrer 2 caractères ou plus pour le champ du nom'
+    },
+    lastName: {
+      isValid: false,
+      inputName: document.querySelector('#last'),
+      errorMessage:
+        'Veuillez entrer 2 caractères ou plus pour le champ du prénom'
+    },
+    email: {
+      isValid: false,
+      inputName: document.querySelector('#email'),
+      errorMessage: 'Veuillez entrer une adresse email valide'
+    },
+    birthdate: {
+      isValid: false,
+      inputName: document.querySelector('#birthdate'),
+      errorMessage: 'Vous devez entrer votre date de naissance'
+    },
+    quantity: {
+      isValid: false,
+      inputName: document.querySelector('#quantity'),
+      errorMessage: 'Veuillez renseigner un nombre'
+    },
+    radioButtons: {
+      isValid: false,
+      inputName: document.querySelectorAll('.radio-input'),
+      parentName: document.querySelector('.radio-buttons'),
+      errorMessage: 'Vous devez choisir une option'
+    },
+    usingConditions: {
+      isValid: false,
+      inputName: document.querySelector('#checkbox1'),
+      errorMessage: 'Vous devez vérifier que vous acceptez les termes et conditions'
+    }
+  };
 
   // Regexp
   let datePattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
   let emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  const firstLastNamePattern = /^[a-zA-Z]{2,}$/;
 
-  // Fonction qui vérifie la longueur de la valeur de input
-  function minLengthValidator(errorElement, minLengthNumber, inputValue, name) {
-    if (inputValue && inputValue.length >= minLengthNumber) {
-      errorElement.style.display = "none";
-
-      formInputs[name] = true;
+  // Fonction qui vérifie la conformité des inputs names
+  function namesValidator(inputValue, name) {
+    if (inputValue.trim().match(firstLastNamePattern)) {
+      formData[name].isValid = true;
+      formData[name].inputName.parentNode.removeAttribute('data-error');
+      formData[name].inputName.parentNode.removeAttribute('data-error-visible');
     } else {
-      errorElement.style.display = "block";
-      formInputs[name] = false;
+      formData[name].isValid = false;
+      formData[name].inputName.parentNode.setAttribute(
+        'data-error',
+        formData[name].errorMessage
+      );
+      formData[name].inputName.parentNode.setAttribute(
+        'data-error-visible',
+        'true'
+      );
+    }
+  }
+
+   // Fonction qui vérifie la longueur de la valeur de input
+  function minLengthValidator(minLengthNumber, inputValue, name) {
+    if (inputValue && inputValue.length >= minLengthNumber) {
+      formData[name].isValid = true;
+      formData[name].inputName.parentNode.removeAttribute('data-error');
+      formData[name].inputName.parentNode.removeAttribute('data-error-visible');
+    } else {
+      formData[name].isValid = false;
+      formData[name].inputName.parentNode.setAttribute(
+        'data-error',
+        formData[name].errorMessage
+      );
+      formData[name].inputName.parentNode.setAttribute(
+        'data-error-visible',
+        'true'
+      );
     }
   }
   
   // Fonction qui vérifie la conformité de l'adresse email
-  function emailValidator(input, errorElement) {
-    if (input.match(emailPattern)) {
-      formInputs.email = true;
-      emailData.setAttribute("data-error-visible", false);
+  function emailValidator(inputValue, name) {
+    if (inputValue.match(emailPattern)) {
+      formData[name].isValid = true;
+      formData[name].inputName.parentNode.removeAttribute('data-error');
+      formData[name].inputName.parentNode.removeAttribute('data-error-visible');
     } else {
-      emailData.setAttribute("data-error-visible", true);
-      formInputs.email = false;
+      formData[name].isValid = false;
+      formData[name].inputName.parentNode.setAttribute(
+        'data-error',
+        formData[name].errorMessage
+      );
+      formData[name].inputName.parentNode.setAttribute(
+        'data-error-visible',
+        'true'
+      );
     }
   }
 
   // Fonction qui vérifie la conformité de la date de naissance
-  function dateValidator(input, errorElement) {
-    if (input.match(datePattern)) {
-      formInputs.birthdate = true;
-      birthdateData.setAttribute("data-error-visible", false);
+  function dateValidator(inputValue, name) {
+    if (inputValue.match(datePattern)) {
+      formData[name].isValid = true;
+      formData[name].inputName.parentNode.removeAttribute('data-error');
+      formData[name].inputName.parentNode.removeAttribute('data-error-visible');
     } else {
-      birthdateData.setAttribute("data-error-visible", true);
-      formInputs.birthdate = false;
+      formData[name].isValid = false;
+      formData[name].inputName.parentNode.setAttribute(
+        'data-error',
+        formData[name].errorMessage
+      );
+      formData[name].inputName.parentNode.setAttribute(
+        'data-error-visible',
+        'true'
+      );
     }
   }
 
   // Fonction qui vérifie si un bouton radio est checked
-  function radioValidator(input, errorElement) {
+  function radioValidator(inputs, name) {
+    
     let count = false;
-    for (let radio of input){
-      if (radio.checked){
-        locationsData.setAttribute("data-error-visible", false);
-        formInputs.radioButtons = true;
+    for (let radio of inputs){
+      if (radio.checked === true){
+        formData[name].isValid = true;
+        formData[name].parentName.removeAttribute('data-error');
+        formData[name].parentName.removeAttribute('data-error-visible');
         return count = true;
       }
-      locationsData.setAttribute("data-error-visible", true);
-      formInputs.radioButtons = false;
+      formData[name].isValid = false;
+      formData[name].parentName.setAttribute('data-error', formData[name].errorMessage);
+      formData[name].parentName.setAttribute('data-error-visible', 'true');
     }
   }
 
   // Fonction qui vérifie si un checkbox est checked
-  function checkedValidator(input, errorElement) {
-    if (input.checked == true) {
-      conditionsData.setAttribute("data-error-visible", false);
-      formInputs.usingConditions = true;
-    } else { 
-      conditionsData.setAttribute("data-error-visible", true);
-      formInputs.usingConditions = false;
+  function checkedValidator(input, name) {
+    
+    if (input.checked === true) {
+      formData[name].isValid = true;
+      formData[name].inputName.parentNode.removeAttribute('data-error');
+      formData[name].inputName.parentNode.removeAttribute('data-error-visible');
+    } else {
+      formData[name].isValid = false;
+      formData[name].inputName.parentNode.setAttribute('data-error', formData[name].errorMessage);
+      formData[name].inputName.parentNode.setAttribute('data-error-visible', 'true');
     }
   }
 
   //****************************//
   //*****      Event      *****//
   //**************************//
-  
 
   //On appelle la fonction de validation à l'interaction avec input firstname
   firstName.addEventListener("input", function () {
-    minLengthValidator(firstNameError, 2, this.value, "firstName");
+    namesValidator(this.value, 'firstName');
   });
 
   //On appelle la fonction de validation à l'interaction avec input lastname
   lastName.addEventListener("input", function () {
-    minLengthValidator(lastNameError, 2, this.value, "lastName");
+    namesValidator(this.value, 'lastName');
   });
 
   //On appelle la fonction de validation à l'interaction avec input email
   email.addEventListener("input", function () {
-    emailValidator(this.value, emailError);
+    emailValidator(this.value, 'email');
   });
 
   //On appelle la fonction de validation à l'interaction avec input email
   birthdate.addEventListener("input", function () {
-    dateValidator(this.value, birthdateError);
+    dateValidator(this.value, 'birthdate');
   });
 
   //On appelle la fonction de validation à l'interaction avec input quantity
   quantity.addEventListener("input", function () {
-    minLengthValidator(quantityError, 1, this.value, "quantity");
+    minLengthValidator(1, this.value, 'quantity');
   });
 
   //On appelle la fonction de validation à l'interaction avec click input radio
   for (let radio of radioButtons){
     radio.addEventListener("click", function() {
-      radioValidator(radioButtons, locationError);
+      radioValidator(radioButtons, 'radioButtons');
     });
   }
   
   //On appelle la fonction de validation à l'interaction avec input unsingConditions
   usingConditions.addEventListener("input", function () {
-    checkedValidator(this, usingConditionsError);
+    checkedValidator(this, 'usingConditions');
   });
 
 
   //On appelle toutes les validations à l'interaction avec input submit
   submit.addEventListener("click", function () {
-    minLengthValidator(firstNameError, 2, firstName.value);
-    minLengthValidator(lastNameError, 2, lastName.value);
-    emailValidator(email.value, emailError);
-    dateValidator(birthdate.value, birthdateError);
-    minLengthValidator(quantityError, 1, quantity.value);
-    radioValidator(radioButtons, locationError);
-    checkedValidator(usingConditions, usingConditionsError);
+    namesValidator(firstName.value, 'firstName');
+    namesValidator(lastName.value, 'lastName');
+    emailValidator(email.value, 'email');
+    dateValidator(birthdate.value, 'birthdate');
+    minLengthValidator(1, quantity.value, 'quantity');
+    radioValidator(radioButtons, 'radioButtons');
+    checkedValidator(usingConditions, 'usingConditions');
 
     let isFormValid = true;
-    for (const property in formInputs) {
-      if (formInputs[property] === false) {
+    
+    for (const element in formData) {
+      if (formData[element].isValid === false) {
         isFormValid = false;
       }
     }
@@ -231,6 +290,4 @@ function editNav() {
   form.addEventListener("submit", function (e) {
     e.preventDefault(); //stop form from submitting
   });
-
-
-// });
+});
