@@ -1,9 +1,13 @@
 function editNav() {
   let myTopNav = document.querySelector("#myTopnav");
   if (myTopNav.className === "topnav") {
+    // myTopNav.className += " responsive";
     myTopNav.classList.add('responsive');
+    // myTopNav.setAttribute("class", "topnav responsive");
   } else {
+    // myTopNav.className = "topnav";
     myTopNav.classList.remove('responsive');
+    // myTopNav.setAttribute("class", "topnav");
   }
 }
 
@@ -17,6 +21,26 @@ window.addEventListener("load", function () {
   const closeConfirm = document.querySelector(".close-confirm");
   const closeConfirmButton = document.querySelector(".close-confirm-button");
 
+  // // launch modal form
+  // function launchModal() {
+  //   modalbg.style.display = "block";
+  // }
+
+  // // close modal form
+  // function closeModal() {
+  //   modalbg.style.display = "none";
+  // }
+
+  // // launch modal confirm message
+  // function launchModalConfirm() {
+  //   modalConfirm.style.display = "block";
+  // }
+
+  // // close modal confirm message
+  // function closeModalConfirm() {
+  //   modalConfirm.style.display = "none";
+  // }
+
   /**
    * If the element's display property is set to block, set it to none. Otherwise, set it to block
    * @param element - The element that you want to toggle.
@@ -29,6 +53,7 @@ window.addEventListener("load", function () {
   }
 
   // launch modal event
+  // modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
   modalBtn.forEach(btn =>
     btn.addEventListener('click', function () {
       toggleModal(modalbg);
@@ -36,11 +61,14 @@ window.addEventListener("load", function () {
   );
 
   // Close modal event
+  // modalCloseBtn.addEventListener("click", closeModal);
   modalCloseBtn.addEventListener('click', function () {
     toggleModal(modalbg);
   });
 
   // Close Confirm event
+  // closeConfirm.addEventListener("click", closeModalConfirm);
+  // closeConfirmButton.addEventListener("click", closeModalConfirm);
   closeConfirm.addEventListener('click', function () {
     toggleModal(modalConfirm);
   });
@@ -106,6 +134,11 @@ window.addEventListener("load", function () {
   };
 
   /* It's an object that contains regular expressions that we can use to validate the input fields. */
+  // let datePattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+  // let emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  // const firstLastNamePattern = /^[a-zA-Z]{2,}$/;
+
+  /* It's an object that contains regular expressions that we can use to validate the input fields. */
   const RegexPattern = {
     datePattern: /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/,
     emailPattern:
@@ -129,10 +162,92 @@ window.addEventListener("load", function () {
       formData[name].inputName.parentNode.removeAttribute('data-error-visible');
     }
     if (!inputValue.trim().match(RegexPattern[pattern])) {
-      formData[name].inputName.parentNode.setAttribute('data-error', formData[name].errorMessage);
-      formData[name].inputName.parentNode.setAttribute('data-error-visible', 'true');
+      formData[name].inputName.parentNode.setAttribute(
+        'data-error',
+        formData[name].errorMessage
+      );
+      formData[name].inputName.parentNode.setAttribute(
+        'data-error-visible',
+        'true'
+      );
     }
   }
+
+  // Fonction qui vérifie la conformité des inputs names
+  // function namesValidator(inputValue, name) {
+  //   if (inputValue.trim().match(firstLastNamePattern)) {
+  //     formData[name].isValid = true;
+  //     formData[name].inputName.parentNode.removeAttribute('data-error');
+  //     formData[name].inputName.parentNode.removeAttribute('data-error-visible');
+  //   } else {
+  //     formData[name].isValid = false;
+  //     formData[name].inputName.parentNode.setAttribute(
+  //       'data-error',
+  //       formData[name].errorMessage
+  //     );
+  //     formData[name].inputName.parentNode.setAttribute(
+  //       'data-error-visible',
+  //       'true'
+  //     );
+  //   }
+  // }
+
+   // Fonction qui vérifie la longueur de la valeur de input
+  // function minLengthValidator(minLengthNumber, inputValue, name) {
+  //   if (inputValue && inputValue.length >= minLengthNumber) {
+  //     formData[name].isValid = true;
+  //     formData[name].inputName.parentNode.removeAttribute('data-error');
+  //     formData[name].inputName.parentNode.removeAttribute('data-error-visible');
+  //   } else {
+  //     formData[name].isValid = false;
+  //     formData[name].inputName.parentNode.setAttribute(
+  //       'data-error',
+  //       formData[name].errorMessage
+  //     );
+  //     formData[name].inputName.parentNode.setAttribute(
+  //       'data-error-visible',
+  //       'true'
+  //     );
+  //   }
+  // }
+  
+  // Fonction qui vérifie la conformité de l'adresse email
+  // function emailValidator(inputValue, name) {
+  //   if (inputValue.match(emailPattern)) {
+  //     formData[name].isValid = true;
+  //     formData[name].inputName.parentNode.removeAttribute('data-error');
+  //     formData[name].inputName.parentNode.removeAttribute('data-error-visible');
+  //   } else {
+  //     formData[name].isValid = false;
+  //     formData[name].inputName.parentNode.setAttribute(
+  //       'data-error',
+  //       formData[name].errorMessage
+  //     );
+  //     formData[name].inputName.parentNode.setAttribute(
+  //       'data-error-visible',
+  //       'true'
+  //     );
+  //   }
+  // }
+
+  // Fonction qui vérifie la conformité de la date de naissance
+  // function dateValidator(inputValue, name) {
+  //   if (inputValue.match(datePattern)) {
+  //     formData[name].isValid = true;
+  //     formData[name].inputName.parentNode.removeAttribute('data-error');
+  //     formData[name].inputName.parentNode.removeAttribute('data-error-visible');
+  //   } else {
+  //     formData[name].isValid = false;
+  //     formData[name].inputName.parentNode.setAttribute(
+  //       'data-error',
+  //       formData[name].errorMessage
+  //     );
+  //     formData[name].inputName.parentNode.setAttribute(
+  //       'data-error-visible',
+  //       'true'
+  //     );
+  //   }
+  // }
 
   /**
    * It takes in an array of radio buttons and a name, and then loops through the array to check if any
@@ -145,12 +260,21 @@ window.addEventListener("load", function () {
    */
   function radioValidator(inputs, name) {
     for (let radio of inputs){
+      // if (radio.checked === true){
+      //   formData[name].isValid = true;
+      //   formData[name].parentName.removeAttribute('data-error');
+      //   formData[name].parentName.removeAttribute('data-error-visible');
+      //   return count = true;
+      // }
       if (Boolean(radio.checked)) {
         formData[name].isValid = true;
         formData[name].parentName.removeAttribute('data-error');
         formData[name].parentName.removeAttribute('data-error-visible');
         return (count = true);
       }
+      // formData[name].isValid = false;
+      // formData[name].parentName.setAttribute('data-error', formData[name].errorMessage);
+      // formData[name].parentName.setAttribute('data-error-visible', 'true');
       formData[name].parentName.setAttribute(
         'data-error',
         formData[name].errorMessage
@@ -166,6 +290,14 @@ window.addEventListener("load", function () {
    * @param name - the name of the input field
    */
   function checkedValidator(input, name) {    
+    // if (input.checked === true) {
+    //   formData[name].isValid = true;
+    //   formData[name].inputName.parentNode.removeAttribute('data-error');
+    //   formData[name].inputName.parentNode.removeAttribute('data-error-visible');
+    // } else {
+    //   formData[name].isValid = false;
+    //   formData[name].inputName.parentNode.setAttribute('data-error', formData[name].errorMessage);
+    //   formData[name].inputName.parentNode.setAttribute('data-error-visible', 'true');
     if (Boolean(input.checked)) {
       formData[name].isValid = true;
       formData[name].inputName.parentNode.removeAttribute('data-error');
@@ -192,10 +324,7 @@ window.addEventListener("load", function () {
           return false;
         }
       }
-      for (const element in formData) {
-        formData[element].isValid = false;
-      return true; 
-      }
+      return true;
     };
 
   //****************************//
@@ -250,6 +379,19 @@ window.addEventListener("load", function () {
     radioValidator(radioButtons, 'radioButtons');
     checkedValidator(usingConditions, 'usingConditions');
 
+    // let isFormValid = true;
+    
+    // for (const element in formData) {
+    //   if (formData[element].isValid === false) {
+    //     isFormValid = false;
+    //   }
+    // }
+
+    // if (isFormValid) {
+    //   launchModalConfirm();
+    //   form.reset();
+    //   closeModal();
+    // }
     if (canValidateRegistration()) {
       toggleModal(modalConfirm);
       form.reset();

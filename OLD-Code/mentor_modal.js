@@ -1,68 +1,69 @@
 function editNav() {
-  let myTopNav = document.querySelector("#myTopnav");
-  if (myTopNav.className === "topnav") {
+  let myTopNav = document.querySelector('#myTopnav');
+  if (myTopNav.className === 'topnav') {
+    // myTopNav.className += " responsive";
     myTopNav.classList.add('responsive');
+    // myTopNav.setAttribute("class", "topnav responsive");
   } else {
+    // myTopNav.className = "topnav";
     myTopNav.classList.remove('responsive');
+    // myTopNav.setAttribute("class", "topnav");
   }
 }
 
 // DOM loading
-window.addEventListener("load", function () {
+window.addEventListener('load', function () {
   // DOM Elements
-  const modalbg = document.querySelector(".bground");
-  const modalBtn = document.querySelectorAll(".modal-btn");
-  const modalCloseBtn = document.querySelector(".close");
-  const modalConfirm = document.querySelector(".bground-confirm");
-  const closeConfirm = document.querySelector(".close-confirm");
-  const closeConfirmButton = document.querySelector(".close-confirm-button");
+  const modalbg = document.querySelector('.bground');
+  const modalBtn = document.querySelectorAll('.modal-btn');
+  const modalCloseBtn = document.querySelector('.close');
+  const modalConfirm = document.querySelector('.bground-confirm');
+  const closeConfirm = document.querySelector('.close-confirm');
+  const closeConfirmButton = document.querySelector('.close-confirm-button');
 
   /**
    * If the element's display property is set to block, set it to none. Otherwise, set it to block
    * @param element - The element that you want to toggle.
    * @returns the value of the element.style.display property.
    */
-   function toggleModal(element) {
+  function toggleModal(element) {
     return element.style.display === 'block'
       ? (element.style.display = 'none')
       : (element.style.display = 'block');
   }
 
-  // launch modal event
   modalBtn.forEach(btn =>
     btn.addEventListener('click', function () {
       toggleModal(modalbg);
     })
   );
 
-  // Close modal event
   modalCloseBtn.addEventListener('click', function () {
     toggleModal(modalbg);
   });
 
-  // Close Confirm event
   closeConfirm.addEventListener('click', function () {
     toggleModal(modalConfirm);
   });
 
   closeConfirmButton.addEventListener('click', () => {
     toggleModal(modalConfirm);
-  });  
+  });
 
   //****************************//
   //***** form validation *****//
   //**************************//
 
   //DOM elements
-  const form = document.querySelector("#reserve-form");
-  const firstName = document.querySelector("#first");
-  const lastName = document.querySelector("#last");
-  const email = document.querySelector("#email");
-  const birthdate = document.querySelector("#birthdate");
-  const quantity = document.querySelector("#quantity");
-  const usingConditions = document.querySelector("#checkbox1");
-  const radioButtons = document.querySelectorAll(".radio-input");
-  const submit = document.querySelector(".btn-submit");
+  const form = document.querySelector('#reserve-form');
+  const firstName = document.querySelector('#first');
+  const lastName = document.querySelector('#last');
+  const email = document.querySelector('#email');
+  const birthdate = document.querySelector('#birthdate');
+  const quantity = document.querySelector('#quantity');
+  const usingConditions = document.querySelector('#checkbox1');
+  const radioButtons = document.querySelectorAll('.radio-input');
+  const submit = document.querySelector('.btn-submit');
 
   /* It's an object that contains regular expressions that we can use to validate the input fields. */
   let formData = {
@@ -79,6 +80,7 @@ window.addEventListener("load", function () {
     },
     email: {
       isValid: false,
+
       inputName: document.querySelector('#email'),
       errorMessage: 'Veuillez entrer une adresse email valide'
     },
@@ -101,7 +103,8 @@ window.addEventListener("load", function () {
     usingConditions: {
       isValid: false,
       inputName: document.querySelector('#checkbox1'),
-      errorMessage: 'Vous devez vérifier que vous acceptez les termes et conditions'
+      errorMessage:
+        'Vous devez vérifier que vous acceptez les termes et conditions'
     }
   };
 
@@ -122,7 +125,7 @@ window.addEventListener("load", function () {
    * @param [pattern] - The pattern to match against.
    */
 
-   function validatorEngin(inputValue, name, pattern = '') {
+  function validatorEngin(inputValue, name, pattern = '') {
     if (inputValue.trim().match(RegexPattern[pattern])) {
       formData[name].isValid = true;
       formData[name].inputName.parentNode.removeAttribute('data-error');
@@ -150,7 +153,7 @@ window.addEventListener("load", function () {
    * @returns the value of the variable count.
    */
   function radioValidator(inputs, name) {
-    for (let radio of inputs){
+    for (let radio of inputs) {
       if (Boolean(radio.checked)) {
         formData[name].isValid = true;
         formData[name].parentName.removeAttribute('data-error');
@@ -165,13 +168,13 @@ window.addEventListener("load", function () {
     }
   }
 
-   /**
+  /**
    * If the input is checked, remove the error message and set the isValid property to true. If the
    * input is not checked, add the error message and set the isValid property to false
    * @param input - the input element
    * @param name - the name of the input field
    */
-  function checkedValidator(input, name) {    
+  function checkedValidator(input, name) {
     if (Boolean(input.checked)) {
       formData[name].isValid = true;
       formData[name].inputName.parentNode.removeAttribute('data-error');
@@ -184,64 +187,63 @@ window.addEventListener("load", function () {
       formData[name].inputName.parentNode.setAttribute(
         'data-error-visible',
         'true'
-      );  
+      );
     }
   }
 
-   /**
+  /**
    * If any of the formData elements are not valid, return false. Otherwise, return true
    * @returns A boolean value.
    */
-    const canValidateRegistration = () => {
-      for (const element in formData) {
-        if (!Boolean(formData[element].isValid)) {
-          return false;
-        }
+  const canValidateRegistration = () => {
+    for (const element in formData) {
+      if (!Boolean(formData[element].isValid)) {
+        return false;
       }
-      return true;
-    };
+    }
+    return true;
+  };
 
   //****************************//
   //*****      Event      *****//
   //**************************//
 
   //On appelle la fonction de validation à l'interaction avec input firstname
-  firstName.addEventListener("input", function () {
+  firstName.addEventListener('input', function () {
     validatorEngin(this.value, 'firstName', 'fullNamePattern');
   });
 
   //On appelle la fonction de validation à l'interaction avec input lastname
-  lastName.addEventListener("input", function () {
+  lastName.addEventListener('input', function () {
     validatorEngin(this.value, 'lastName', 'fullNamePattern');
   });
 
   //On appelle la fonction de validation à l'interaction avec input email
-  email.addEventListener("input", function () {
+  email.addEventListener('input', function () {
     validatorEngin(this.value, 'email', 'emailPattern');
   });
 
   //On appelle la fonction de validation à l'interaction avec input email
-  birthdate.addEventListener("input", function () {
+  birthdate.addEventListener('input', function () {
     validatorEngin(this.value, 'birthdate', 'datePattern');
   });
 
   //On appelle la fonction de validation à l'interaction avec input quantity
-  quantity.addEventListener("input", function () {
+  quantity.addEventListener('input', function () {
     validatorEngin(this.value, 'quantity', 'quantityPattern');
   });
 
   //On appelle la fonction de validation à l'interaction avec click input radio
-  for (let radio of radioButtons){
+  for (let radio of radioButtons) {
     radio.addEventListener('click', function () {
       radioValidator(radioButtons, 'radioButtons');
     });
   }
-  
+
   //On appelle la fonction de validation à l'interaction avec input unsingConditions
   usingConditions.addEventListener('input', function () {
     checkedValidator(this, 'usingConditions');
   });
-
 
   //On appelle toutes les validations à l'interaction avec input submit
   submit.addEventListener('click', function () {
